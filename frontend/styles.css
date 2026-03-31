@@ -1,0 +1,666 @@
+/* =========================================
+   DEADLIST - The Unfarmable Bounty Board
+   EVE Frontier x Sui Hackathon 2026
+   ========================================= */
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1a2744;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2a4a7a;
+}
+
+/* =========================================
+   Animated Space Background
+   ========================================= */
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes drift {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-100vh) translateX(20px); }
+}
+
+@keyframes nebulaPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+}
+
+.stars, .stars2, .stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 200%;
+    background: transparent;
+}
+
+.stars {
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 40px 70px, #ffffff, transparent),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+        radial-gradient(2px 2px at 160px 120px, #ffffff, transparent),
+        radial-gradient(1px 1px at 230px 80px, #00d4ff, transparent),
+        radial-gradient(2px 2px at 300px 200px, #ffffff, transparent),
+        radial-gradient(1px 1px at 380px 150px, #ffffff, transparent),
+        radial-gradient(2px 2px at 450px 50px, #ffffff, transparent),
+        radial-gradient(1px 1px at 520px 180px, #ff4444, transparent),
+        radial-gradient(2px 2px at 600px 100px, #ffffff, transparent),
+        radial-gradient(1px 1px at 680px 220px, #ffffff, transparent),
+        radial-gradient(2px 2px at 750px 30px, #ffffff, transparent),
+        radial-gradient(1px 1px at 820px 170px, #00d4ff, transparent),
+        radial-gradient(2px 2px at 900px 90px, #ffffff, transparent),
+        radial-gradient(1px 1px at 970px 250px, #ffffff, transparent);
+    background-size: 1000px 500px;
+    animation: drift 60s linear infinite;
+}
+
+.stars2 {
+    background-image:
+        radial-gradient(1px 1px at 50px 120px, #ffffff, transparent),
+        radial-gradient(1px 1px at 130px 60px, #ffffff, transparent),
+        radial-gradient(2px 2px at 200px 200px, #8b5cf6, transparent),
+        radial-gradient(1px 1px at 280px 100px, #ffffff, transparent),
+        radial-gradient(1px 1px at 360px 180px, #ffffff, transparent),
+        radial-gradient(2px 2px at 440px 40px, #ffffff, transparent),
+        radial-gradient(1px 1px at 510px 220px, #ffffff, transparent),
+        radial-gradient(1px 1px at 590px 80px, #00d4ff, transparent),
+        radial-gradient(2px 2px at 670px 160px, #ffffff, transparent),
+        radial-gradient(1px 1px at 740px 20px, #ffffff, transparent),
+        radial-gradient(1px 1px at 830px 240px, #ffffff, transparent),
+        radial-gradient(2px 2px at 910px 120px, #ffffff, transparent);
+    background-size: 1000px 500px;
+    animation: drift 80s linear infinite;
+    animation-delay: -20s;
+}
+
+.stars3 {
+    background-image:
+        radial-gradient(1px 1px at 100px 80px, #ffffff, transparent),
+        radial-gradient(2px 2px at 180px 190px, #ffffff, transparent),
+        radial-gradient(1px 1px at 250px 30px, #ffd700, transparent),
+        radial-gradient(1px 1px at 330px 140px, #ffffff, transparent),
+        radial-gradient(2px 2px at 400px 210px, #ffffff, transparent),
+        radial-gradient(1px 1px at 480px 70px, #ffffff, transparent),
+        radial-gradient(1px 1px at 550px 160px, #00ff88, transparent),
+        radial-gradient(2px 2px at 630px 10px, #ffffff, transparent),
+        radial-gradient(1px 1px at 700px 190px, #ffffff, transparent),
+        radial-gradient(1px 1px at 780px 50px, #ffffff, transparent),
+        radial-gradient(2px 2px at 860px 130px, #ffffff, transparent);
+    background-size: 1000px 500px;
+    animation: drift 100s linear infinite;
+    animation-delay: -40s;
+}
+
+.nebula {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 30%, rgba(138, 43, 226, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(255, 68, 68, 0.1), transparent),
+        radial-gradient(ellipse 50% 30% at 50% 50%, rgba(0, 212, 255, 0.08), transparent);
+    animation: nebulaPulse 10s ease-in-out infinite;
+}
+
+/* =========================================
+   Navigation Styles
+   ========================================= */
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: #9ca3af;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background: rgba(26, 39, 68, 0.5);
+    border-color: rgba(42, 74, 122, 0.5);
+}
+
+.nav-link.active {
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.mobile-nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: #9ca3af;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+}
+
+/* =========================================
+   Page Transitions
+   ========================================= */
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   Bounty Card Styles
+   ========================================= */
+
+.bounty-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(10, 10, 15, 0.9));
+    border: 1px solid rgba(42, 74, 122, 0.3);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.bounty-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff4444, #ff6a00);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bounty-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 68, 68, 0.5);
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 68, 68, 0.1);
+}
+
+.bounty-card:hover::before {
+    opacity: 1;
+}
+
+.bounty-card-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid rgba(42, 74, 122, 0.2);
+}
+
+.bounty-card-body {
+    padding: 1.25rem;
+}
+
+.bounty-card-footer {
+    padding: 1rem 1.25rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(42, 74, 122, 0.2);
+}
+
+.bounty-reward {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #ffd700, #ff6a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bounty-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bounty-status.active {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.bounty-status.claimed {
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.bounty-status.cancelled {
+    background: rgba(107, 114, 128, 0.2);
+    color: #6b7280;
+    border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+/* Target Avatar */
+.target-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #1a2744, #0a0a0f);
+    border: 2px solid #ff4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #ff4444;
+    position: relative;
+    overflow: hidden;
+}
+
+.target-avatar::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 68, 68, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* =========================================
+   Leaderboard Styles
+   ========================================= */
+
+.leaderboard-entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    transition: background 0.3s ease;
+}
+
+.leaderboard-entry:hover {
+    background: rgba(42, 74, 122, 0.2);
+}
+
+.rank {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.rank.gold {
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    color: #000;
+}
+
+.rank.silver {
+    background: linear-gradient(135deg, #c0c0c0, #808080);
+    color: #000;
+}
+
+.rank.bronze {
+    background: linear-gradient(135deg, #cd7f32, #8b4513);
+    color: #000;
+}
+
+.rank.default {
+    background: rgba(42, 74, 122, 0.5);
+    color: #9ca3af;
+}
+
+/* =========================================
+   Form Styles
+   ========================================= */
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* =========================================
+   Modal Styles
+   ========================================= */
+
+.modal-header {
+    position: relative;
+    padding: 2rem;
+    background: linear-gradient(180deg, rgba(255, 68, 68, 0.15), transparent);
+    border-bottom: 1px solid rgba(42, 74, 122, 0.3);
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(42, 74, 122, 0.3);
+}
+
+/* =========================================
+   Toast Notifications
+   ========================================= */
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: rgba(26, 26, 46, 0.95);
+    border: 1px solid rgba(42, 74, 122, 0.5);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(8px);
+    animation: slideIn 0.3s ease-out;
+    max-width: 360px;
+}
+
+.toast.success {
+    border-color: rgba(0, 255, 136, 0.5);
+}
+
+.toast.error {
+    border-color: rgba(255, 68, 68, 0.5);
+}
+
+.toast.info {
+    border-color: rgba(0, 212, 255, 0.5);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* =========================================
+   Utility Classes
+   ========================================= */
+
+.glow-text {
+    text-shadow: 0 0 10px currentColor;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+    }
+    50% {
+        box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    }
+}
+
+/* Data attribute animations */
+[data-animate="fade-up"] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Staggered animations */
+[data-animate="fade-up"]:nth-child(1) { animation-delay: 0.1s; }
+[data-animate="fade-up"]:nth-child(2) { animation-delay: 0.2s; }
+[data-animate="fade-up"]:nth-child(3) { animation-delay: 0.3s; }
+[data-animate="fade-up"]:nth-child(4) { animation-delay: 0.4s; }
+[data-animate="fade-up"]:nth-child(5) { animation-delay: 0.5s; }
+[data-animate="fade-up"]:nth-child(6) { animation-delay: 0.6s; }
+
+/* =========================================
+   Recent Claims Feed
+   ========================================= */
+
+.claim-entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    transition: background 0.3s ease;
+}
+
+.claim-entry:hover {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.claim-arrow {
+    color: #ff4444;
+    font-size: 1.25rem;
+}
+
+/* =========================================
+   Responsive Adjustments
+   ========================================= */
+
+@media (max-width: 768px) {
+    .bounty-card {
+        margin: 0 -0.5rem;
+        border-radius: 0.75rem;
+    }
+
+    .bounty-reward {
+        font-size: 1.25rem;
+    }
+
+    .target-avatar {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+}
+
+/* =========================================
+   Loading States
+   ========================================= */
+
+.skeleton {
+    background: linear-gradient(90deg,
+        rgba(42, 74, 122, 0.2) 0%,
+        rgba(42, 74, 122, 0.4) 50%,
+        rgba(42, 74, 122, 0.2) 100%);
+    background-size: 200% 100%;
+    animation: skeleton 1.5s ease-in-out infinite;
+    border-radius: 0.5rem;
+}
+
+@keyframes skeleton {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* =========================================
+   Anti-Farm Badge
+   ========================================= */
+
+.anti-farm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #00ff88;
+}
+
+/* =========================================
+   Kill Value Display
+   ========================================= */
+
+.kill-value {
+    font-family: 'Share Tech Mono', monospace;
+    color: #ffd700;
+}
+
+/* =========================================
+   Claim Button
+   ========================================= */
+
+.claim-btn {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #00ff88, #00d4ff);
+    color: #000;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.claim-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+}
+
+.claim-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.claim-btn:hover::before {
+    left: 100%;
+}
+
+/* =========================================
+   Cancel Button
+   ========================================= */
+
+.cancel-btn {
+    background: rgba(255, 68, 68, 0.2);
+    border: 1px solid rgba(255, 68, 68, 0.5);
+    color: #ff4444;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 68, 68, 0.3);
+    border-color: #ff4444;
+}
